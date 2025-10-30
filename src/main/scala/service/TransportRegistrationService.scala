@@ -15,9 +15,6 @@ case class TransportRegistrationService(transports: List[Transport] = List(), ro
   def findAvailableTransports(): List[Transport] =
     transports.filter(_.availableSeats > 0)
 
-  def findByTransportType[T <: Transport](implicit m: Manifest[T]): List[Transport] =
-    transports.collect { case t: T => t }
-
   def findByPrice(maxPrice: BigDecimal): List[Transport] =
     transports.filter(_.route.price <= maxPrice)
 }
