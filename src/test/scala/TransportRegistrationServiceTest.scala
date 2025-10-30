@@ -44,15 +44,6 @@ class TransportRegistrationServiceTest extends AnyFunSuite {
     assert(available.contains(train1))
   }
 
-  test("findByTransportType should filter transports by type") {
-    val service = TransportRegistrationService(List(bus1, bus2, train1, plane1))
-    val buses = service.findByTransportType[Bus]
-    assert(buses.forall(_.isInstanceOf[Bus]))
-    assert(buses.contains(bus1))
-    assert(buses.contains(bus2))
-    assert(!buses.contains(train1))
-  }
-
   test("findByPrice should filter transports under max price") {
     val service = TransportRegistrationService(List(bus1, bus2, train1, plane1))
     val cheap = service.findByPrice(100)

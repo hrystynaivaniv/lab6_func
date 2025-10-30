@@ -31,7 +31,7 @@ class IncomeServiceTest extends AnyFunSuite {
     assert(trainIncome == (train.route.price - train.fuelCosts))
 
     val planeIncome = IncomeService.incomeByTransport(plane, tickets)
-    assert(planeIncome == (-plane.fuelCosts)) // бо немає квитків
+    assert(planeIncome == (-plane.fuelCosts)) 
   }
 
   test("incomeByTransportAndRoute should calculate income for specific route") {
@@ -39,7 +39,7 @@ class IncomeServiceTest extends AnyFunSuite {
     assert(busRouteIncome == (bus.route.price * 2 - bus.fuelCosts))
 
     val trainRouteIncome = IncomeService.incomeByTransportAndRoute(train, "Kyiv-Lviv", tickets)
-    assert(trainRouteIncome == -train.fuelCosts) // train не має квитків на цей маршрут
+    assert(trainRouteIncome == -train.fuelCosts) 
   }
 
   test("totalIncome should sum income for all transports") {
