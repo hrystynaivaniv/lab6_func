@@ -1,6 +1,5 @@
 package models
 import java.time.Duration
-import scala.collection.mutable
 
 case class Route(name: String, price: BigDecimal, distance: Double, time: Duration)
 

@@ -42,7 +42,7 @@ object MainApp extends App {
       println(s"${p.name} failed to buy a ticket: $err")
   }
 
-  println(s"Current seat status (RACE): ${transportStock}")
+  println(s"Current seat status: ${transportStock}")
 
   transportStock(bus1.id) = 2
 
@@ -61,14 +61,7 @@ object MainApp extends App {
       println(s"${p.name} failed to buy a ticket: $err")
   }
 
-  println(s"Current seat status (SYNC): ${transportStock}")
-
-  val (successes, failures) = syncResults.foldLeft((0, 0)) {
-    case ((ok, fail), (_, Right(_))) => (ok + 1, fail)
-    case ((ok, fail), (_, Left(_)))  => (ok, fail + 1)
-  }
-
-  println(s"\nSUMMARY: Successful purchases = $successes, Failed purchases = $failures\n")
+  println(s"Current seat status: ${transportStock}\n")
 
   transportStock(bus1.id) = 2
   transportStock(bus2.id) = 3

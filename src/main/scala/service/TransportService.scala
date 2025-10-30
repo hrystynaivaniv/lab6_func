@@ -14,6 +14,9 @@ class TransportService(transports: List[Transport], transportStock: mutable.Map[
         case _ => false
       }
     }
+  }.recoverWith { case ex =>
+    println(s"Error checking bus $busId: ${ex.getMessage}")
+    Future.successful(false)
   }
 
   def checkBusWithFallback(busId: Int, fallbackBusId: Int): Future[Boolean] =
@@ -22,6 +25,9 @@ class TransportService(transports: List[Transport], transportStock: mutable.Map[
       case false =>
         println(s"Bus $busId unavailable, trying fallback bus $fallbackBusId")
         checkBusAvailability(fallbackBusId)
+    }.recoverWith { case ex =>
+      println(s"Error checking fallback bus $fallbackBusId: ${ex.getMessage}")
+      Future.successful(false)
     }
 
 
@@ -29,6 +35,10 @@ class TransportService(transports: List[Transport], transportStock: mutable.Map[
   : Future[List[(Passenger, Boolean)]] = {
     val availabilityFutures: List[Future[(Passenger, Boolean)]] = passengers.map { p =>
       checkBusWithFallback(primaryBusId, fallbackBusId).map(avail => (p, avail))
+        .recoverWith { case ex =>
+        println(s"Error checking availability for ${p.name}: ${ex.getMessage}")
+        Future.successful((p, false))
+      }
     }
     Future.sequence(availabilityFutures)
   }
